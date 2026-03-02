@@ -73,7 +73,7 @@ def main():
 
     iters_gN = PointFixe(gN, Q0, tolr, nmax)
     # si ton PointFixe NE retourne PAS Q0, décommente :
-    # iters_gN = [Q0] + iters_gN
+    iters_gN = [Q0] + iters_gN
     print_table(iters_gN, "TABLEAU 3 — Newton via gN(Q) (question L)")
 
 if __name__ == "__main__":
