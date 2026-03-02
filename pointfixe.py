@@ -1,5 +1,6 @@
 import time
 
+
 def Pointfixe(fonc_pointfixe, Q0, tolr, nmax):
     # fonc_pointfixe is the function considered
     # Q0 is the initial value of the fixed point iteration
