@@ -13,6 +13,11 @@ def g1(Q):
 def g2(Q):
     return 10 - 2*math.exp(Q)
 
+def gN(Q):
+    f = math.exp(Q) + Q/2 - 5
+    fp = math.exp(Q) + 0.5
+    return Q - f/fp
+
 def print_table(iters, titre, max_rows=None):
     """
     iters: liste [Q0, Q1, ..., QN]
@@ -65,6 +70,11 @@ def main():
     # g2 : on imprime seulement jusqu'à Q5 (n=0..5)
     iters_g2 = [1.0] + PointFixe(g2, Q0, tolr, nmax)
     print_table(iters_g2, "TABLEAU 2 — Point fixe avec g2(Q)=10-2e^Q (divergence attendue)", max_rows=5)
+
+    iters_gN = PointFixe(gN, Q0, tolr, nmax)
+    # si ton PointFixe NE retourne PAS Q0, décommente :
+    # iters_gN = [Q0] + iters_gN
+    print_table(iters_gN, "TABLEAU 3 — Newton via gN(Q) (question L)")
 
 if __name__ == "__main__":
     main()
