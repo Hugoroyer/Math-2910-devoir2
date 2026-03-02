@@ -18,6 +18,23 @@ def gN(Q):
     fp = math.exp(Q) + 0.5
     return Q - f/fp
 
+def steffensen(g):
+    """
+    Retourne une nouvelle fonction gS correspondant à la transformation de Steffensen.
+    gS(Q) = Q - (g(Q)-Q)^2 / (g(g(Q)) - 2g(Q) + Q)
+    """
+    def gS(Q):
+        gQ = g(Q)
+        ggQ = g(gQ)
+        denom = ggQ - 2*gQ + Q
+
+        # Sécurité: si denom = 0 (ou très proche), on évite division par zéro
+        if denom == 0:
+            return float("nan")
+
+        return Q - (gQ - Q)**2 / denom
+
+    return gS
 def print_table(iters, titre, max_rows=None):
     """
     iters: liste [Q0, Q1, ..., QN]
@@ -75,6 +92,17 @@ def main():
     # si ton PointFixe NE retourne PAS Q0, décommente :
     iters_gN = [Q0] + iters_gN
     print_table(iters_gN, "TABLEAU 3 — Newton via gN(Q) (question L)")
+
+    # M) Steffensen sur g1, g2, gN
+    iters_s1 = [Q0] + PointFixe(steffensen(g1), Q0, tolr, nmax)
+    print_table(iters_s1, "TABLEAU 4 — Steffensen appliqué à g1(Q)=ln(5-Q/2)", max_rows=5)
+
+    iters_s2 = [Q0] + PointFixe(steffensen(g2), Q0, tolr, nmax)
+    # si ça diverge violemment, tu peux limiter l'affichage, ex max_rows=10
+    print_table(iters_s2, "TABLEAU 5 — Steffensen appliqué à g2(Q)=10-2e^Q", max_rows=5)
+
+    iters_sN = [Q0] + PointFixe(steffensen(gN), Q0, tolr, nmax)
+    print_table(iters_sN, "TABLEAU 6 — Steffensen appliqué à gN(Q) (Newton)", max_rows=5)
 
 if __name__ == "__main__":
     main()
