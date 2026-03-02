@@ -59,11 +59,11 @@ def main():
     nmax = 150
 
     # g1 : on imprime toutes les itérations retournées (jusqu'à convergence)
-    iters_g1 = PointFixe(g1, Q0, tolr, nmax)
+    iters_g1 = [1.0] + PointFixe(g1, Q0, tolr, nmax)
     print_table(iters_g1, "TABLEAU 1 — Point fixe avec g1(Q)=ln(5-Q/2) (convergence attendue)")
 
     # g2 : on imprime seulement jusqu'à Q5 (n=0..5)
-    iters_g2 = PointFixe(g2, Q0, tolr, nmax)
+    iters_g2 = [1.0] + PointFixe(g2, Q0, tolr, nmax)
     print_table(iters_g2, "TABLEAU 2 — Point fixe avec g2(Q)=10-2e^Q (divergence attendue)", max_rows=5)
 
 if __name__ == "__main__":
